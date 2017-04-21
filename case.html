@@ -124,29 +124,94 @@
 
 class: center, middle
 
-# qqq
-## David Branner
-### 201601qqq
+# Case
+## David Branner, Dev Bootcamp
+### 20151229
 
 ---
 
-### What these slides cover
-
- 1. qqq
-
----
-
-### Terminology Review
-
- 1. **qqq**
---
-: qqq
+Just a couple of points:
 --
 
 
+First, there's no need to repeat the variable you're testing many times:
+--
+
+
+```ruby
+x = case
+    when y = 'a'
+      'letter a'
+    when y = 'b'; 'letter b'
+    when y = 'c' then 'letter c'
+    else 'who knows?'
+    end
+```
+--
+
+Instead, put that variable right after `case`:
+--
+
+```ruby
+x = case y
+    when 'a'
+      'letter a'
+    when 'b'; 'letter b'
+    when 'c' then 'letter c'
+    else 'who knows?'
+    end
+```
+
 ---
 
+Second, you may find good uses for the "case equality operator", `===`.
+--
 
+
+Between `Fixnum` objects (ordinary numbers), it behaves the same as the regular "equality operator" `==`. 
+--
+
+But it is "overloaded" (given special, contextual meaning) with some classes.
+--
+
+
+With `Range` it matches when the variable is within the range:
+--
+
+
+```ruby
+population = 80_000
+kind_of_place = case population
+                when 0..1000; "village"
+                when 1001..100_000; "town"
+                when 100_000..Float::INFINITY; "city"
+                # No need for else here, because of Float::INFINITY, above.
+                end
+```
+--
+
+
+(Remember — because I put `population` right after `case`, I don't have to write out an explicit `===` operator, but `case` treats it as though it's there, by default.)
+--
+
+With classes, `===` identifies an instance of the class:
+--
+
+
+```ruby
+a = [1, 2, 3]
+puts case a
+     when String then 'it is a string'
+     when Numeric then "it's a number"
+     when Array then 'we find that it is an array'
+     end
+```
+--
+
+
+And there are other examples, too…
+
+---
 
 class: center, middle
 

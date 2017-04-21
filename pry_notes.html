@@ -124,29 +124,176 @@
 
 class: center, middle
 
-# qqq
-## David Branner
-### 201601qqq
+# Debugging with Pry
+## David Branner, Dev Bootcamp
+### 20160107
 
 ---
 
-### What these slides cover
+# What these slides cover
 
- 1. qqq
-
----
-
-### Terminology Review
-
- 1. **qqq**
---
-: qqq
+ 1. What is Pry?
 --
 
 
+ 1. Tools
+--
+
+
+ 1. Useful commands to learn first
+--
+
+
+ 1. Debugging with Pry
+
 ---
 
+## What is Pry?
+--
 
+Open-source REPL, alternative to Ruby's built-in Irb, founded by John Mair.
+--
+
+
+[Source](https://github.com/pry/pry) | [Website](http://pryrepl.org/) | [Wiki](https://github.com/pry/pry/wiki)
+--
+
+
+Can be invoked in mid-execution of a program, for debugging.
+
+---
+
+## Useful commands to learn first
+--
+
+ 1. **To exit** (with any new tool, always learn this first!): 
+--
+use `exit-all` or `!!!`. 
+--
+
+
+    `exit` alone only exits the current "binding" (Pry subshell). If you're nested two or more bindings deep, you'll remain in Pry but "pop" one subshell.
+--
+
+ 1. **Get help**: 
+--
+use `help`. 
+--
+For help on a particular command  (e.g. `$`): `help $`.
+--
+
+ 1. **List available methods/constants** of a class/module: 
+--
+use `ls`:
+--
+ 
+    ```ruby
+    >> ls Math
+constants: DomainError  E  PI
+Math.methods: 
+  acos   asinh  atanh  cosh  exp    hypot   log    sin   tan 
+  acosh  atan   cbrt   erf   frexp  ldexp   log10  sinh  tanh
+  asin   atan2  cos    erfc  gamma  lgamma  log2   sqrt
+    ```
+--
+
+ 1. **Show source code**: 
+--
+use `show-source` or `$`. 
+--
+Add `-l` for line numbers.
+
+ 1. **Edit** a function or program: 
+--
+use `edit` followed by what you want to edit.
+--
+
+ 1. **See docs**: 
+--
+use `show-doc` or `?` followed by what you want docs for.
+
+---
+
+## Tools
+--
+
+
+Entering `help` alone brings up multi-page documentation. Main topics:
+--
+
+ * **Context**: what is the current object scope (where you are in the code)
+--
+
+
+ * **Editing**: manage or alter the current input line or input history 
+--
+
+
+ * **Introspection**: view documentation and source-code
+--
+
+
+ * **Gems**: install or manage
+--
+
+
+ * **Commands**: edit or add new command-set
+--
+
+
+ * **Aliases**: shortcuts for important commands
+--
+
+
+ * **Input and output**: control prompts, save output to shell, access the command line
+--
+
+
+ * **Misc**: (self-evident)
+--
+
+
+ * **Navigating pry**: (self-evident)
+--
+
+
+ * **Prompts**: control Pry's prompt
+
+---
+
+## Debugging with Pry
+
+To debug, `require 'pry'` in a file and then insert `binding.pry` wherever you want to stop execution and look around inside the program.
+--
+
+
+I wrote a little program and don't understand why it doesn't work. 
+
+```ruby
+require 'pry'
+
+def fn(n)
+  while !defined?(input) || input.empty?
+    print 'Enter input: '
+    input = gets.chomp
+    binding.pry
+  end
+  puts input * n
+end
+```
+--
+
+When the line `binding.pry` is reached, a new Pry shell opens (numbered from 1) and I can run commands to (for example) examine values of variables at that moment in the execution.
+--
+
+
+To return to program-execution, I type `exit`.
+
+--
+
+For more sophisticated debugging tools, look at `pry-nav` and `pry-byebug`.
+
+---
 
 class: center, middle
 
